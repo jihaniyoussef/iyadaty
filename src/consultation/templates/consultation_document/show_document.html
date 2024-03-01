@@ -1,0 +1,28 @@
+<div id="modal-backdrop" class="modal-backdrop fade show" style="display:block;"></div>
+<div id="modalshowdocument" class="modal fade show" tabindex="-1" style="display:block;">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ title|lower|capfirst }}</h5>
+            </div>
+            <div class="modal-body">
+                <div style="margin-left: 5px; margin-right: 5px; height: 100%;">
+                    {% if extension in ex_list %}
+                    <p class="text-center">C'est un document de type (.{{ extension }}).</p>
+                    {% elif extension == 'pdf' %}
+                    <iframe src="{{ document_url }}" width="100%" height="100%">
+                    </iframe>
+                    {% else %}
+                        <img src="{{ document_url }}" class="img-fluid" alt="Image">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="modal-footer">
+                {% if extension != 'pdf' %}
+                <a style="text-transform: none;" href="{{ document_url }}" class="btn btn-success" download>Télécharger</a>
+                {% endif %}
+                <button style="text-transform: none;" type="button" class="btn btn-secondary" onclick="closeModal()">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>

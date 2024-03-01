@@ -1,0 +1,25 @@
+<table class="table">
+    <thead>
+        <tr class="text-center">
+            <th scope="col">Description</th>
+            <th scope="col">Prix</th>
+            <th scope="col">QNT</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in payments %}
+        <tr class="text-center">
+            <td style="margin: 0; padding:10px 0;">{{p.description|lower|capfirst}}</td>
+            <td style="margin: 0; padding: 10px 0;">{{p.price}} MAD</td>
+            <td style="margin: 0; padding: 10px 0;">{{p.quantity}}</td>
+            <td style="margin: 0; padding: 10px 0;">
+                <span style="color: red; cursor: pointer;"
+                hx-get="{% url 'delete_payment' p.id %}" hx-target="#payments-table">
+                    <i class="fas fa-trash-alt"></i>
+                </span>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

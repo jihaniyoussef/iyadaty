@@ -1,0 +1,23 @@
+{% load widget_tweaks %}
+<form hx-post="{{ request.path }}" class="modal-content">
+    {% csrf_token %}
+    <div class="modal-header">
+        <h5>Délégues médicaux</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <div class="modal-body ">
+        {% render_field form.nums class="form-control" %}
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <span style="text-transform: None">Annuler</span>
+        </button>
+        <button type="submit" class="btn btn-primary">
+            <span style="text-transform: None">Modifier</span>
+        </button>
+    </div>
+
+</form>

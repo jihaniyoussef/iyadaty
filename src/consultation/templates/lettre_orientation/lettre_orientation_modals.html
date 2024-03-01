@@ -1,0 +1,26 @@
+{% load static %}
+<div class="modal" id="lettreModal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" hx-get="{% url 'lettre_orientation' consultation.id %}" hx-trigger="click from:#lettre-orientation-btn">
+            <!-- content here -->
+        </div>
+    </div>
+</div>
+<div class="modal" id="lettreModal2" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" hx-get="{% url 'lettre_orientation_pdf' consultation.id %}"
+        hx-trigger="lettreChanged from:body" hx-target="#lettre-orientation-overview-body">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- modal-body -->
+            <div id="lettre-orientation-overview-body" style="width: 100%;">
+                <p style="text-align: center; margin: 10px;" >Veuillez  ajouter une lettre d'orientation svp!</p>
+            </div>
+            <!-- footer -->
+                <div class="modal-footer">
+                    <a href="#" data-bs-dismiss="modal" class="btn btn-info">Fermer</a>
+                </div>
+        </div>
+    </div>
+</div>

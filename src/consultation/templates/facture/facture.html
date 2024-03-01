@@ -1,0 +1,131 @@
+{% load widget_tweaks %}
+<div class="modal-header">
+    <h4 class="modal-title">Facture</h4>
+</div>
+<div class="container"></div>
+<div class="modal-body">
+    <div class="first-modal-links">
+        <!-- Apercu et imprimer -->
+        <div>
+            <button data-bs-toggle="modal" href="#factureModal2" type="button" class="btn btn-primary" id="testPrintFacture">
+                <i class="fas fa-search me-2" style="font-size: 15px;"></i>
+                <span style="text-transform: None;">Aperçu et imprimer</span>
+            </button>
+        </div>
+    </div>
+    <!-- patient data -->
+    <div class="ordonnance-patient-data">
+        <fieldset disabled>
+            <!-- patient name -->
+            <div class="row mb-2">
+                <label for="ordPatientname" class="col-sm-1 col-form-label">Patient</label>
+                <div class="col-sm-11">
+                    <input type="text" class="form-control" id="ordPatientname" value="{{ patient.full_name }}">
+                </div>
+            </div>
+            <!-- age and date -->
+            <div class="row">
+                <div class="col-6">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-2">
+                            <label for="ordPatientage" class="col-form-label">Age</label>
+                        </div>
+                        <div class="col-10">
+                            <input type="text" id="ordPatientage" class="form-control" value="{{ patient.age }} ans">
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-2">
+                            <label for="todayOrd" class="col-form-label">date</label>
+                        </div>
+                        <div class="col-10">
+                            {% render_field date_form.today id="todayOrd" class="form-control" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <!-- List des medicaments -->
+    <div class="ordonnance-patient-data">
+        <div id="payments-table">
+            <table class="table">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">Description</th>
+                        <th scope="col">Prix</th>
+                        <th scope="col">QNT</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in payments %}
+                    <tr class="text-center">
+                        <td style="margin: 0; padding:10px 0;">{{p.description|lower|capfirst}}</td>
+                        <td style="margin: 0; padding: 10px 0;">{{p.price}} MAD</td>
+                        <td style="margin: 0; padding: 10px 0;">{{p.quantity}}</td>
+                        <td style="margin: 0; padding: 10px 0;">
+                            <span style="color: red; cursor: pointer;"
+                            hx-get="{% url 'delete_payment' p.id %}" hx-target="#payments-table">
+                                <i class="fas fa-trash-alt"></i>
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- test form here -->
+        <hr>
+        <form class="mt-3" id="add-payment-form" hx-post="{% url 'add_payment' consultation.id %}" hx-target="#payments-table">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-6">
+                    {% render_field form.description class="form-control" placeholder="Description" %}
+                </div>
+                <div class="col-2">
+                    {% render_field form.price  class="form-control" placeholder="Prix" %}
+                </div>
+                <div class="col-2">
+                    {% render_field form.quantity  class="form-control" placeholder="QNT" %}
+                </div>
+                <div class="col-2">
+                    <button id="submit-add-payment-form" type="submit" class="btn btn-primary">
+                        <span style="text-transform: none;">Ajouter</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <!-- Annuler -->
+    <a hx-get="{% url 'cancel_facture' consultation.id %}" data-bs-dismiss="modal" class="btn btn-secondary">
+        <span style="text-transform: none;">Annuler</span>
+    </a>
+    <!-- sauvgarder -->
+    <!-- make ajax -->
+    <a data-bs-dismiss="modal" class="btn btn-success">
+        <span style="text-transform: none;">Sauvgarder</span>
+    </a>
+</div>
+<script>
+    // flatpicker code
+    flatpickr("#todayOrd", {
+        locale: "fr",
+        enableTime: false,
+        dateFormat: "d-m-Y",
+        altInput: true,
+        altFormat: "l j F Y"
+    });
+    // reset form
+    $('#submit-add-payment-form').click(function() {
+        setTimeout(function() {
+            $('#add-payment-form')[0].reset();
+        }, 500);
+    });
+</script>

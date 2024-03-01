@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Données de la clinique{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-top: 40px;">
+    <div  class="modal-content">
+        <div class="modal-header">
+            <h5>Médecin et coordonnée de la clinique</h5>
+        </div>
+        {% if doctor %}
+        <div class="modal-body">
+            <div class="modal-body">
+                <fieldset disabled>
+                <!-- first row nom de médcien -->
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Médcien:</label>
+                        <input type="text" class="form-control" value="{{ doctor.nom }}">
+                    </div>
+                    <div class="col-md-6" style="direction: rtl;">
+                        <label class="form-label">طبيب:</label>
+                        <input type="text" class="form-control" value="{{ doctor.ar_nom }}">
+                    </div>
+                </div>
+                <!-- second row -->
+                <div class="row g-3 mt-2">
+                    <div class="col-md-6">
+                        <label class="form-label">Spécialité:</label>
+                        <input type="text" class="form-control" value="{{ doctor.specialite }}">
+                    </div>
+                    <div class="col-md-6" style="direction: rtl;">
+                        <label class="form-label">تخصص:</label>
+                        <input type="text" class="form-control" value="{{ doctor.ar_specialite }}">
+                    </div>
+                </div>
+                <!-- third row ecole -->
+                <div class="row g-3 mt-2">
+                    <div class="col-md-6">
+                        <label class="form-label">Université:</label>
+                        <input type="text" class="form-control" value="{{ doctor.ecole }}">
+                    </div>
+                    <div class="col-md-6" style="direction: rtl;">
+                        <label class="form-label">جامعة:</label>
+                        <input type="text" class="form-control" value="{{ doctor.ar_ecole }}">
+                    </div>
+                </div>
+                <!-- Contact -->
+                <div class="row g-3 mt-2">
+                    <div class="col-md-6">
+                        <label class="form-label">Gsm:</label>
+                        <input type="text" class="form-control" value="{{ doctor.gsm }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Tél:</label>
+                        <input type="text" class="form-control" value="{{ doctor.tel }}">
+                    </div>
+                </div>
+                <!-- email and address -->
+                <div class="row g-3 mt-2">
+                    <div class="col-md-6">
+                        <label class="form-label">Email:</label>
+                        <input type="text" class="form-control" value="{{ doctor.email }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Adresse:</label>
+                        <input type="text" class="form-control" value="{{ doctor.address }}">
+                    </div>
+                </div>
+                <!-- logo -->
+                <div class="row g-3 mt-2">
+                    <div class="col-md-6">
+                        <label class="form-label">Ville:</label>
+                        <input type="text" class="form-control" value="{{ doctor.ville }}">
+                    </div>
+                    <div class="col-md-6" >
+                        <label class="form-label">logo:</label> <br>
+                        <img src="{{ doctor.logo.url }}" height="100px" class="img-fluid" alt="...">
+                    </div>
+                </div>
+                </fieldset>
+            </div>
+        </div>
+        {% else %}
+        <div class="modal-body row g-3">
+            <p>Veuillez ajouter les données de la clinique</p>
+        </div>
+        {% endif %}
+        <div class="modal-footer">
+            <a href="{% url 'add_info_doctor' %}" class="btn btn-success">
+                <span style="text-transform: none;">
+                    {% if doctor %}
+                        Modifier
+                    {% else %}
+                        Ajouter
+                    {% endif %}
+                </span>
+            </a>
+        </div>
+    </div>
+<br><br>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+
+</script>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% load static %}
+<div class="modal" id="factureModal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" hx-get="{% url 'facture' consultation.id %}" hx-trigger="click from:#facture-btn">
+            <!-- content here -->
+            <p>Chargement ...</p>
+        </div>
+    </div>
+</div>
+<div class="modal" id="factureModal2" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" hx-get="{% url 'facture_pdf' consultation.id %}"
+        hx-trigger="factureChanged from:body" hx-target="#facture-overview-body">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- modal-body -->
+            <div id="facture-overview-body" style="width: 100%;">
+                <p style="text-align: center; margin: 10px;" >Veuillez  ajouter une facture svp!</p>
+            </div>
+            <!-- footer -->
+                <div class="modal-footer">
+                    <a href="#" data-bs-dismiss="modal" class="btn btn-info">Fermer</a>
+                </div>
+        </div>
+    </div>
+</div>

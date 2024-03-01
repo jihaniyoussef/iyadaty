@@ -1,0 +1,294 @@
+{% load widget_tweaks %}
+{% with WIDGET_ERROR_CLASS='is-invalid' %}
+<form hx-post="{{ request.path }}" class="modal-content">
+    {% csrf_token %}
+    <div class="modal-header">
+        <h5>Modifier la consulation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <!-- display not unique -->
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger">
+        {% for error in form.non_field_errors %}
+        <p>{{ error|escape }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="modal-body row g-3">
+        <div class="row">
+            <!-- Général -->
+            <div class="col-lg-6 col-md-12 pe-4">
+                <h4>Général</h4>
+                <hr>
+                <!-- Motif -->
+                <div class="mb-2">
+                    <label class="form-label">Motifs</label>
+                    {% render_field form.motif class="form-control" style="height:80px;" id="consultation-motif"  placeholder="Motifs de la consultation" %}
+                    <div class="invalid-feedback">{{ form.motif.errors|first }}</div>
+                </div>
+                <!-- Antécédents -->
+                <div class="mb-2">
+                    <label class="form-label">Antécédents</label>
+                    {% render_field form.antecedant class="form-control" style="height:80px;" id="consultation-anticedant"  placeholder="Antécédents de la consultation" %}
+                    <div class="invalid-feedback">{{ form.antecedant.errors|first }}</div>
+                </div>
+                <!-- Résultat de l'examen clinique -->
+                <div class="mb-2">
+                    <label for="examen" class="form-label">Résultat de l'examen</label>
+                    {% render_field form.examen class="form-control" style="height:80px;" id="examen" placeholder="Examen clinique" %}
+                    <div class="invalid-feedback">{{ form.examen.errors|first }}</div>
+                </div>
+                <!-- Diagnostique médicale -->
+                <div class="mb-2">
+                    <label for="diagnostique" class="form-label">Diagnostique médicale</label>
+                    {% render_field form.diagnostique class="form-control" style="height:80px;" id="diagnostique" placeholder="Le diagnostique" %}
+                    <div class="invalid-feedback">{{ form.diagnostique.errors|first }}</div>
+                </div>
+                <!-- Observation -->
+                <div class="mb-4">
+                    <label for="observation" class="form-label">Observation</label>
+                    {% render_field form.observation id="Observation" style="height:80px;" class="form-control" placeholder="Remarques..." %}
+                    <div class="invalid-feedback">{{ form.observation.errors|first }}</div>
+                </div>
+            </div>
+            <!-- Constantes vitales -->
+            <div class="col-lg-6 col-md-12">
+                <h4>Constantes vitales</h4>
+                <hr>
+                <!-- poids -->
+                <div class="row mb-2 g-3 align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <label for="poids" class="col-form-label">Poids (Kg)</label>
+                    </div>
+                    <div class="col-auto">
+                        {% render_field form.poids_kg id="poids" class="form-control" placeholder="Le poids en Kg" %}
+                        <div class="invalid-feedback">{{ form.poids_kg.errors|first }}</div>
+                    </div>
+                </div>
+                <!-- Taille -->
+                <div class="row mb-2 g-3 align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <label for="taille" class="col-form-label">Taille (Cm)</label>
+                    </div>
+                    <div class="col-auto">
+                        {% render_field form.taille_cm id="taille" class="form-control" placeholder="La taille en Cm" %}
+                        <div class="invalid-feedback">{{ form.taille_cm.errors|first }}</div>
+                    </div>
+                </div>
+                <!-- IMC -->
+                <div class="row mb-2 g-3 align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <label for="imc" class="col-form-label">IMC</label>
+                    </div>
+                    <div class="col-auto">
+                        {% render_field form.imc id="imc" class="form-control" placeholder="IMC" %}
+                        <div class="invalid-feedback">{{ form.imc.errors|first }}</div>
+                    </div>
+                </div>
+                <!-- temperature -->
+                <div class="row mb-2 g-3 align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <label for="temperature" class="col-form-label">Température (°C)</label>
+                    </div>
+                    <div class="col-auto">
+                        {% render_field form.temperature_degC id="temperature" class="form-control" placeholder="La température en Celsius" %}
+                        <div class="invalid-feedback">{{ form.temperature_degC.errors|first }}</div>
+                    </div>
+                </div>
+                <!-- fréquence cardiaque -->
+                <div class="row mb-2 g-3 align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <label for="frequence" class="col-form-label">Fréquence cardiaque</label>
+                    </div>
+                    <div class="col-auto">
+                        {% render_field form.frequence_cardiaque id="frequence" class="form-control" placeholder="Ex: 70" %}
+                        <div class="invalid-feedback">{{ form.frequence_cardiaque.errors|first }}</div>
+                    </div>
+                </div>
+                <!-- pression artérielle -->
+                <div class="row mb-2 g-3 align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <label for="pression" class="col-form-label">Pression artérielle</label>
+                    </div>
+                    <div class="col-auto">
+                        {% render_field form.pression_arterielle id="pression" class="form-control" placeholder="Ex: 8/12" %}
+                        <div class="invalid-feedback">{{ form.pression_arterielle.errors|first }}</div>
+                    </div>
+                </div>
+                <!-- sao2 -->
+                <div class="row mb-2 g-3 align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <label for="sao2" class="col-form-label">Sa O2 (%)</label>
+                    </div>
+                    <div class="col-auto">
+                        {% render_field form.sao2 id="sao2" class="form-control" placeholder="Sa O2 en %" %}
+                        <div class="invalid-feedback">{{ form.sao2.errors|first }}</div>
+                    </div>
+                </div>
+                <!-- ct -->
+                <div class="row mb-2 g-3 align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <label for="ct" class="col-form-label">Cholestérol total</label>
+                    </div>
+                    <div class="col-auto">
+                        {% render_field form.ct id="ct" class="form-control" placeholder="CT" %}
+                        <div class="invalid-feedback">{{ form.ct.errors|first }}</div>
+                    </div>
+                </div>
+                <!-- hdl -->
+                <div class="row mb-2 g-3 align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <label for="hdl" class="col-form-label">High density lipoproteine</label>
+                    </div>
+                    <div class="col-auto">
+                        {% render_field form.hdl id="hdl" class="form-control" placeholder="HDL" %}
+                        <div class="invalid-feedback">{{ form.hdl.errors|first }}</div>
+                    </div>
+                </div>
+                <!-- ldl -->
+                <div class="row mb-2 g-3 align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <label for="ldl" class="col-form-label">Low density lipoprotéine</label>
+                    </div>
+                    <div class="col-auto">
+                        {% render_field form.ldl id="ldl" class="form-control" placeholder="LDL" %}
+                        <div class="invalid-feedback">{{ form.ldl.errors|first }}</div>
+                    </div>
+                </div>
+                <!-- tg -->
+                <div class="row mb-2 g-3 align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <label for="tg" class="col-form-label">Triglycérides</label>
+                    </div>
+                    <div class="col-auto">
+                        {% render_field form.tg id="tg" class="form-control" placeholder="TG" %}
+                        <div class="invalid-feedback">{{ form.tg.errors|first }}</div>
+                    </div>
+                </div>
+                <!-- g -->
+                <div class="row g-3 align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <label for="tg" class="col-form-label">Glycémie</label>
+                    </div>
+                    <div class="col-auto">
+                        {% render_field form.g id="g" class="form-control" placeholder="G" %}
+                        <div class="invalid-feedback">{{ form.g.errors|first }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="text-transform: None;">
+            Annuler
+        </button>
+        <button type="submit" class="btn btn-primary" style="text-transform: None;">Sauvegarder</button>
+    </div>
+</form>
+{% endwith %}
+
+<script type="text/javascript">
+    // auto complete
+    function split(val) {
+        return val.split(/,\s*/);
+    }
+
+    function extractLast(term) {
+        return split(term).pop();
+    }
+    // motif
+    $(function() {
+        $("#consultation-motif").autocomplete({
+            minLength: 0,
+            source: function(request, response) {
+                $.ajax({
+                    url: "{% url 'autocomplete_motif' %}",
+                    dataType: "json",
+                    data: {
+                        'term': extractLast(request.term),
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            focus: function() {
+                return false;
+            },
+            select: function(e, ui) {
+                var terms = split(this.value);
+                terms.pop();
+                terms.push(ui.item.value);
+                terms.push("");
+                this.value = terms.join(", ");
+                return false;
+            }
+        });
+    });
+    // antecedant
+    $(function() {
+        $("#consultation-anticedant").autocomplete({
+            minLength: 0,
+            source: function(request, response) {
+                $.ajax({
+                    url: "{% url 'autocomplete_motif' %}",
+                    dataType: "json",
+                    data: {
+                        'term': extractLast(request.term),
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            focus: function() {
+                return false;
+            },
+            select: function(e, ui) {
+                var terms = split(this.value);
+                terms.pop();
+                terms.push(ui.item.value);
+                terms.push("");
+                this.value = terms.join(", ");
+                return false;
+            }
+        });
+    });
+    // examen
+    $(function() {
+        $("#examen").autocomplete({
+            minLength: 0,
+            source: function(request, response) {
+                $.ajax({
+                    url: "{% url 'autocomplete_examen' %}",
+                    dataType: "json",
+                    data: {
+                        'term': extractLast(request.term),
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            focus: function() {
+                return false;
+            },
+            select: function(e, ui) {
+                var terms = split(this.value);
+                terms.pop();
+                terms.push(ui.item.value);
+                terms.push("");
+                this.value = terms.join(", ");
+                return false;
+            }
+        });
+    });
+    // auto fille IMC
+    $('#poids, #taille').keyup(function() {
+        if ($('#taille').val()) {
+            $('#imc').val(($('#poids').val() / (Math.pow($('#taille').val() / 100, 2))).toFixed(2));
+        }
+    });
+</script>

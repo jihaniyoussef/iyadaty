@@ -1,0 +1,22 @@
+<form hx-post="{{ request.path }}" class="modal-content">
+    {% csrf_token %}
+    <div class="modal-header">
+        <h5>Supprimer un document</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <div class="modal-body ">
+        <p>Voulez-vous vraiment supprimer ce document?</p>
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+            <span style="text-transform: None">Annuler</span>
+        </button>
+        <button type="submit" class="btn btn-danger">
+            <span style="text-transform: None">Supprimer</span>
+        </button>
+    </div>
+
+</form>

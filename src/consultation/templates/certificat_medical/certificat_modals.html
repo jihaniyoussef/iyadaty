@@ -1,0 +1,27 @@
+{% load static %}
+<div class="modal" id="certificatModal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" hx-get="{% url 'certificat_medical' consultation.id %}" hx-trigger="click from:#certificat-medical-btn">
+            <!-- content here -->
+        </div>
+    </div>
+</div>
+<div class="modal" id="certificatModal2" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <!-- "every 2s" "load, click from:#testPrintOrd" to try later-->
+        <div class="modal-content" hx-get="{% url 'certificat_medical_pdf' consultation.id %}"
+        hx-trigger="certificatChanged from:body" hx-target="#certificat-medical-overview-body">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- modal-body -->
+            <div id="certificat-medical-overview-body" style="width: 100%;">
+                <p style="text-align: center; margin: 10px;" >Veuillez  ajouter une certificat médical svp!</p>
+            </div>
+            <!-- footer -->
+                <div class="modal-footer">
+                    <a href="#" data-bs-dismiss="modal" class="btn btn-info">Fermer</a>
+                </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Données de la clinique{% endblock %}
+
+{% block content %}
+<head>
+    <style>
+        .filelabel {
+            width: 100%;
+            border: 2px dashed grey;
+            border-radius: 5px;
+            display: block;
+            padding: 5px;
+            transition: border 300ms ease;
+            cursor: pointer;
+            text-align: center;
+            margin: 0;
+        }
+
+        .filelabel i,
+        .filelabel .title {
+            color: grey;
+            transition: 200ms color;
+        }
+
+        .filelabel:hover {
+            border: 2px solid #1665c4;
+        }
+
+        .filelabel:hover i,
+        .filelabel:hover .title {
+            color: #1665c4;
+        }
+
+        #FileInput {
+            display: none;
+        }
+    </style>
+</head>
+
+
+<div class="container" style="margin-top: 40px;">
+    {% with WIDGET_ERROR_CLASS='is-invalid' %}
+    <form method="post" class="modal-content" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="modal-header">
+            <h5>
+                {% if info_doctor %}Modifier{% else %}Ajouter{% endif %} données de la clinique
+            </h5>
+        </div>
+        <!-- display not unique -->
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {% for error in form.non_field_errors %}
+            <p>{{ error|escape }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="modal-body">
+            <!-- first row nom de médcien -->
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Médcien:</label>
+                    {% render_field form.nom class="form-control" %}
+                    <div class="invalid-feedback">{{ form.nom.errors|first }}</div>
+                </div>
+                <div class="col-md-6" style="direction: rtl;">
+                    <label class="form-label">طبيب:</label>
+                    {% render_field form.ar_nom class="form-control" %}
+                    <div class="invalid-feedback">{{ form.ar_nom.errors|first }}</div>
+                </div>
+            </div>
+            <!-- second row -->
+            <div class="row g-3 mt-2">
+                <div class="col-md-6">
+                    <label class="form-label">Spécialité:</label>
+                    {% render_field form.specialite class="form-control" %}
+                    <div class="invalid-feedback">{{ form.specialite.errors|first }}</div>
+                </div>
+                <div class="col-md-6" style="direction: rtl;">
+                    <label class="form-label">تخصص:</label>
+                    {% render_field form.ar_specialite class="form-control" %}
+                    <div class="invalid-feedback">{{ form.ar_specialite.errors|first }}</div>
+                </div>
+            </div>
+            <!-- third row ecole -->
+            <div class="row g-3 mt-2">
+                <div class="col-md-6">
+                    <label class="form-label">Université:</label>
+                    {% render_field form.ecole class="form-control" %}
+                    <div class="invalid-feedback">{{ form.ecole.errors|first }}</div>
+                </div>
+                <div class="col-md-6" style="direction: rtl;">
+                    <label class="form-label">جامعة:</label>
+                    {% render_field form.ar_ecole class="form-control" %}
+                    <div class="invalid-feedback">{{ form.ar_ecole.errors|first }}</div>
+                </div>
+            </div>
+            <!-- Contact -->
+            <div class="row g-3 mt-2">
+                <div class="col-md-6">
+                    <label class="form-label">Gsm:</label>
+                    {% render_field form.gsm class="form-control" %}
+                    <div class="invalid-feedback">{{ form.gsm.errors|first }}</div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Tél:</label>
+                    {% render_field form.tel class="form-control" %}
+                    <div class="invalid-feedback">{{ form.tel.errors|first }}</div>
+                </div>
+            </div>
+            <!-- email and address -->
+            <div class="row g-3 mt-2">
+                <div class="col-md-6">
+                    <label class="form-label">Email:</label>
+                    {% render_field form.email class="form-control" %}
+                    <div class="invalid-feedback">{{ form.email.errors|first }}</div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Adresse:</label>
+                    {% render_field form.address class="form-control" %}
+                    <div class="invalid-feedback">{{ form.address.errors|first }}</div>
+                </div>
+            </div>
+            <div class="row g-3 mt-2">
+                <div class="col-md-6">
+                    <label class="form-label">Ville:</label>
+                    {% render_field form.ville class="form-control" %}
+                    <div class="invalid-feedback">{{ form.ville.errors|first }}</div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <label class="filelabel">
+                            <i class="fa fa-paperclip"></i>
+                            <span class="title">
+                                Ajouter un logo
+                            </span>
+                            {% render_field form.logo class="FileUpload1" id="FileInput" %}
+                        </label>
+                    </div>
+                    <div class="invalid-feedback">{{ form.logo.errors|first }}</div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-success">
+                <span style="text-transform: none;">
+                    {% if info_doctor %}Modifier{% else %}Ajouter{% endif %}
+                </span>
+            </button>
+        </div>
+
+    </form>
+    {% endwith %}
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $("#FileInput").on('change', function(e) {
+        var labelVal = $(".title").text();
+        var oldfileName = $(this).val();
+        fileName = e.target.value.split('\\').pop();
+
+        if (oldfileName == fileName) {
+            return false;
+        }
+        var extension = fileName.split('.').pop();
+
+        if ($.inArray(extension, ['jpg', 'jpeg', 'png']) >= 0) {
+            $(".filelabel i").removeClass().addClass('fas fa-file-image');
+            $(".filelabel i, .filelabel .title").css({
+                'color': '#208440'
+            });
+            $(".filelabel").css({
+                'border': ' 2px solid #208440'
+            });
+        } else if (extension == 'pdf') {
+            $(".filelabel i").removeClass().addClass('fas fa-file-pdf');
+            $(".filelabel i, .filelabel .title").css({
+                'color': 'red'
+            });
+            $(".filelabel").css({
+                'border': ' 2px solid red'
+            });
+
+        } else if (extension == 'doc' || extension == 'docx') {
+            $(".filelabel i").removeClass().addClass('fas fa-file-word');
+            $(".filelabel i, .filelabel .title").css({
+                'color': '#2388df'
+            });
+            $(".filelabel").css({
+                'border': ' 2px solid #2388df'
+            });
+        } else if (extension == 'xlsx' || extension == 'xlx') {
+            $(".filelabel i").removeClass().addClass('fas fa-file-excel');
+            $(".filelabel i, .filelabel .title").css({
+                'color': '#39ac73'
+            });
+            $(".filelabel").css({
+                'border': ' 2px solid #39ac73'
+            });
+        } else if (extension == 'pptx' || extension == 'pptm' || extension == 'ppt') {
+            $(".filelabel i").removeClass().addClass('fas fa-file-powerpoint');
+            $(".filelabel i, .filelabel .title").css({
+                'color': '#ffa31a'
+            });
+            $(".filelabel").css({
+                'border': ' 2px solid #ffa31a'
+            });
+        } else {
+            $(".filelabel i").removeClass().addClass('fas fa-file-alt');
+            $(".filelabel i, .filelabel .title").css({
+                'color': 'black'
+            });
+            $(".filelabel").css({
+                'border': ' 2px solid black'
+            });
+        }
+
+        if (fileName) {
+            if (fileName.length > 15) {
+                $(".filelabel .title").text(fileName.slice(0, 12) + '...' + extension);
+            } else {
+                $(".filelabel .title").text(fileName);
+            }
+        } else {
+            $(".filelabel .title").text(labelVal);
+        }
+    });
+</script>
+{% endblock %}

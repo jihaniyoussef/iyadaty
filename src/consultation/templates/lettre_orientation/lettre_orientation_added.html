@@ -1,0 +1,11 @@
+{{ lettre.text|safe }}
+<div>
+    <button type="button" class="btn btn-primary"
+    hx-get="{% url 'edit_lettre_orientation' consultation.id %}" hx-target="#addLettre"
+    >
+        <span style="text-transform: none;">Modifier</span>
+    </button>
+    <a data-bs-dismiss="modal" class="btn btn-success">
+        <span style="text-transform: none;">Sauvgarder</span>
+    </a>
+</div>

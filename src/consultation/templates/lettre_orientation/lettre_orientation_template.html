@@ -1,0 +1,136 @@
+{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Lettre d'orientation pour {{ consultation.patient.full_name }}</title>
+    <meta name="description" content="Template de la lettre d'orientation">
+    <style>
+        @page {
+            size: A5 portrait;
+            margin: 0.5cm;
+            margin-bottom: 2cm;
+            font-family: Arial, sans-serif;
+
+            @bottom-center {
+                color: #545796;
+                content: '{{ doctor.address }} {{ doctor.ville }} \A {% if doctor.tel %}Tél: {{ doctor.tel }} - {{ doctor.gsm }}{% endif %} \A {{ doctor.email|lower|capfirst }}';
+                font-size: 8pt;
+                line-height: 1.6;
+                font-weight: 600;
+                white-space: pre-wrap;
+            }
+        }
+
+        html {
+            font-size: 11pt;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        body {
+            margin: 0;
+            background-image: url("{{ doctor.logo_center.url }}");
+            background-repeat: no-repeat;
+            background-size: auto;
+            background-position: 50% 75%;
+        }
+
+        .entete {
+            display: flex;
+            justify-content: space-between;
+            background-image: url("{{ doctor.logo.url }}");
+            background-repeat: no-repeat;
+            background-size: auto;
+            background-position: center;
+
+        }
+
+        .entete-fr {
+            max-width: 5cm;
+        }
+
+        .entete-ar {
+            direction: rtl;
+            max-width: 5cm;
+            font-family: Georgia, serif;
+            ;
+        }
+
+        .big-title {
+            color: #6b6da5;
+            text-align: center;
+            font-weight: 600;
+            text-decoration: underline;
+            margin: 0;
+            margin-top: 1cm;
+        }
+
+        .city-date {
+            color: #6b6da5;
+            margin: 0;
+            margin-top: 0.5cm;
+            text-align: center;
+        }
+
+        .nom-prenom {
+            margin: 0;
+            margin-top: 0.3cm;
+            margin-left: 1.5cm;
+        }
+
+        .nom-prenom span {
+            font-size: 12pt;
+        }
+
+        .list-content {
+            margin: 0;
+            margin-top: 1cm;
+        }
+
+        .list-content li {
+            margin-left: 0;
+            padding-left: 0;
+            margin-bottom: 0.5cm;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- entete -->
+    <div class="entete">
+        <div class="entete-fr">
+            <span style="font-weight: 600;">{{ doctor.nom }}</span>
+            <br>
+            <span>{{ doctor.specialite }}</span>
+            <br>
+            <span>{{ doctor.ecole }}</span>
+            </h3>
+        </div>
+        <div class="entete-ar">
+            <span style="font-weight: 900; font-size: 16pt;">{{ doctor.ar_nom }}</span>
+            <br>
+            <span style="font-size: 15pt;">{{ doctor.ar_specialite }}</span>
+            <br>
+            <span style="font-size: 15pt;">{{ doctor.ar_ecole }}</span>
+            </h3>
+        </div>
+    </div>
+
+    <!-- title -->
+    <p class="big-title">Lettre d'orientation</p>
+
+    <!-- city and date -->
+    <p class="city-date">{{ doctor.ville|lower|capfirst }} Le: {{consultation.updated|date:"d/m/Y"}}</p>
+
+    <!-- Name -->
+    <p class="nom-prenom"><span>Pour:</span> {{ consultation.patient.full_name }}</p>
+
+
+    <div class="list-content">
+        {{ lettre.text|safe }}
+    </div>
+</body>
+
+</html>

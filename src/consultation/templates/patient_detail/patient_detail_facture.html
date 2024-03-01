@@ -1,0 +1,26 @@
+<div id="modal-backdrop" class="modal-backdrop fade show" style="display:block;"></div>
+<div id="modalshowdocument" class="modal fade show" tabindex="-1" style="display:block;">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Facture</h5>
+            </div>
+            <div id="facture-dossier-body" style="width: 100%;">
+                {% if pdf_url %}
+                <div style="margin-left: 5px; margin-right: 5px;">
+                    <iframe src="{{ pdf_url }}" width="100%" height="600">
+                    </iframe>
+                </div>
+                {% else %}
+                <p style="text-align: center; margin: 10px;">
+                    le pdf de la facture n'est pas enregistré
+                </p>
+                {% endif %}
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>

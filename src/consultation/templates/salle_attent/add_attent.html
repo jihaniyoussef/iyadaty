@@ -1,0 +1,24 @@
+{% load widget_tweaks %}
+<form hx-post="{{ request.path }}" class="modal-content">
+    {% csrf_token %}
+    <div class="modal-header">
+        <h5>Ajouter à la salle d'attente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <div class="modal-body ">
+        {% render_field form.motif class="form-control form-select" %}
+        <div class="invalid-feedback" style="color: red;">{{ form.motif.errors|first }}</div>
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <span style="text-transform: None">Annuler</span>
+        </button>
+        <button type="submit" class="btn btn-primary">
+            <span style="text-transform: None">Ajouter</span>
+        </button>
+    </div>
+
+</form>

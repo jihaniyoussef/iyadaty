@@ -1,0 +1,93 @@
+{% load widget_tweaks %}
+{% load static %}
+
+
+
+<div class="modal-header">
+    <h4 class="modal-title">Certificat médical</h4>
+</div>
+<div class="modal-body">
+    <div class="first-modal-links">
+        <!-- Apercu et imprimer -->
+        <div>
+            <button data-bs-toggle="modal" href="#certificatModal2" class="btn btn-primary" id="testPrintCertificat">
+                <i class="fas fa-print me-2" style="font-size: 15px;"></i>
+                <span style="text-transform: None;">Aperçu et imprimer</span>
+            </button>
+        </div>
+    </div>
+    <!-- patient data -->
+    <div class="ordonnance-patient-data">
+        <fieldset disabled>
+            <!-- patient name -->
+            <div class="row mb-2">
+                <label for="ordPatientname" class="col-sm-1 col-form-label">Patient</label>
+                <div class="col-sm-11">
+                    <input type="text" class="form-control" id="ordPatientname" value="{{ patient.full_name }}">
+                </div>
+            </div>
+            <!-- age and date -->
+            <div class="row">
+                <div class="col-6">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-2">
+                            <label for="ordPatientage" class="col-form-label">Age</label>
+                        </div>
+                        <div class="col-10">
+                            <input type="text" id="ordPatientage" class="form-control" value="{{ patient.age }} ans">
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-2">
+                            <label for="todayOrd" class="col-form-label">date</label>
+                        </div>
+                        <div class="col-10">
+                            {% render_field date_form.today id="todayOrd" class="form-control" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <!-- Date form -->
+    <div class="ordonnance-patient-data" id="addCertificat">
+        <form id="certificatForm" hx-post="{% url 'add_certificat_medical' consultation.id %}" hx-target="#addCertificat">
+            {% csrf_token %}
+            {{ form.media }}
+            <div>{% render_field form.text  id="certificattext" %}</div>
+            <div style="margin-top: 5px;">
+                <button id="submitBtn" class="btn btn-primary" style="text-transform: none;">Ajouter</button>
+            </div>
+        </form>
+
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <!-- Annuler -->
+    <!-- make ajax -->
+    <a data-bs-dismiss="modal" class="btn btn-secondary" hx-get="{% url 'cancel_certificat_medical' consultation.id %}">
+        <span style="text-transform: none;">Annuler</span>
+    </a>
+</div>
+
+<script>
+    // flatpicker code
+    flatpickr("#todayOrd", {
+        locale: "fr",
+        enableTime: false,
+        dateFormat: "d-m-Y",
+        altInput: true,
+        altFormat: "l j F Y"
+    });
+
+$(document).ready(function(){
+    $("#submitBtn").click(function(){
+        let text = tinyMCE.get('certificattext').getContent();
+        $('#certificattext').val(text);
+    });
+});
+</script>

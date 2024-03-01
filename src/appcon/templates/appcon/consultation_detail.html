@@ -1,0 +1,147 @@
+<fieldset disabled>
+    <div class="row">
+        <!-- Général -->
+        <div class="col-lg-6 col-md-12 pe-4">
+            <h4>Général</h4>
+            <hr>
+            <!-- Motif -->
+            <div class="mb-2">
+                <label class="form-label">Motifs</label>
+                <textarea class="form-control" rows="3">{{ consultation.motif|lower|capfirst }}</textarea>
+            </div>
+            <!-- Antécédents -->
+            <div class="mb-2">
+                <label class="form-label">Antécédents</label>
+                <textarea class="form-control" rows="3">{{ consultation.antecedant|lower|capfirst }}</textarea>
+            </div>
+            <!-- Résultat de l'examen clinique -->
+            <div class="mb-2">
+                <label class="form-label">Résultat de l'examen</label>
+                <textarea class="form-control" rows="3">{{ consultation.examen|lower|capfirst }}</textarea>
+            </div>
+            <!-- Diagnostique médicale -->
+            <div class="mb-2">
+                <label class="form-label">Diagnostique médicale</label>
+                <textarea class="form-control" rows="3">{{ consultation.diagnostique|lower|capfirst }}</textarea>
+            </div>
+            <!-- Observation -->
+            <div class="mb-2">
+                <label class="form-label">Observation</label>
+                <textarea class="form-control" rows="3">{{ consultation.observation|lower|capfirst }}</textarea>
+            </div>
+        </div>
+        <!-- Constantes vitales -->
+        <div class="col-lg-6 col-md-12">
+            <h4>Constantes vitales</h4>
+            <hr>
+            <!-- poids -->
+            <div class="row mb-3 g-3 align-items-center justify-content-between">
+                <div class="col-auto">
+                    <label class="col-form-label">Poids (Kg)</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" class="form-control" value="{% if consultation.poids_kg == None %}{% else %}{{ consultation.poids_kg  }}{% endif %}">
+                </div>
+            </div>
+            <!-- Taille -->
+            <div class="row mb-3 g-3 align-items-center justify-content-between">
+                <div class="col-auto">
+                    <label class="col-form-label">Taille (Cm)</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" class="form-control" value="{% if consultation.taille_cm == None %}{% else %}{{ consultation.taille_cm  }}{% endif %}">
+                </div>
+            </div>
+            <!-- IMC -->
+            <div class="row mb-3 g-3 align-items-center justify-content-between">
+                <div class="col-auto">
+                    <label class="col-form-label">IMC</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" class="form-control" value="{% if consultation.imc == None %}{% else %}{{ consultation.imc  }}{% endif %}">
+                </div>
+            </div>
+            <!-- temperature -->
+            <div class="row mb-3 g-3 align-items-center justify-content-between">
+                <div class="col-auto">
+                    <label class="col-form-label">Température (°C)</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" class="form-control" value="{% if consultation.temperature_degC == None %}{% else %}{{ consultation.temperature_degC  }}{% endif %}">
+                </div>
+            </div>
+            <!-- fréquence cardiaque -->
+            <div class="row mb-3 g-3 align-items-center justify-content-between">
+                <div class="col-auto">
+                    <label class="col-form-label">Fréquence cardiaque</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" class="form-control" value="{% if consultation.frequence_cardiaque == None %}{% else %}{{ consultation.frequence_cardiaque  }}{% endif %}">
+                </div>
+            </div>
+            <!-- pression artérielle -->
+            <div class="row mb-3 g-3 align-items-center justify-content-between">
+                <div class="col-auto">
+                    <label class="col-form-label">Pression artérielle</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" class="form-control" value="{% if consultation.pression_arterielle  %}{{ consultation.pression_arterielle  }}{% endif %}">
+                </div>
+            </div>
+            <!-- sao2 -->
+            <div class="row mb-3 g-3 align-items-center justify-content-between">
+                <div class="col-auto">
+                    <label class="col-form-label">Sa O2 (%)</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" class="form-control" value="{% if consultation.sao2 == None %}{% else %}{{ consultation.sao2  }}{% endif %}">
+                </div>
+            </div>
+            <!-- ct -->
+            <div class="row mb-3 g-3 align-items-center justify-content-between">
+                <div class="col-auto">
+                    <label class="col-form-label">Cholestérol total (CT)</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" class="form-control" value="{{ consultation.ct  }}">
+                </div>
+            </div>
+            <!-- hdl -->
+            <div class="row mb-3 g-3 align-items-center justify-content-between">
+                <div class="col-auto">
+                    <label class="col-form-label">High density lipoproteine (HDL)</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" class="form-control" value="{{ consultation.hdl  }}">
+                </div>
+            </div>
+            <!-- ldl -->
+            <div class="row mb-3 g-3 align-items-center justify-content-between">
+                <div class="col-auto">
+                    <label class="col-form-label">Low density lipoprotéine (LDL)</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" class="form-control" value="{{ consultation.ldl  }}">
+                </div>
+            </div>
+            <!-- tg -->
+            <div class="row mb-3 g-3 align-items-center justify-content-between">
+                <div class="col-auto">
+                    <label class="col-form-label">Triglycérides (TG)</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" class="form-control" value="{{ consultation.tg  }}">
+                </div>
+            </div>
+            <!-- g -->
+            <div class="row g-3 align-items-center justify-content-between">
+                <div class="col-auto">
+                    <label class="col-form-label">Glycémie (G)</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" class="form-control" value="{{ consultation.g  }}">
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>

@@ -1,0 +1,31 @@
+{% load widget_tweaks %}
+{% load static %}
+
+
+{% with WIDGET_ERROR_CLASS='is-invalid' %}
+<form id="lettreForm" hx-post="{% url 'add_lettre_orientation' consultation.id %}" hx-target="#addLettre">
+    {% csrf_token %}
+    {{ form.media }}
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {% for error in form.non_field_errors %}
+                <p>{{ error|escape }}</p>
+                {% endfor %}
+            </div>
+    {% endif %}
+    <div>{% render_field form.text  id="lettretext" %}</div>
+    <div class="invalid-feedback">{{ form.text.errors|first }}</div>
+    <div style="margin-top: 5px;">
+        <button id="submitLettreBtn" class="btn btn-primary" style="text-transform: none;">Sauvegarder</button>
+    </div>
+</form>
+{% endwith %}
+
+<script>
+    $(document).ready(function(){
+        $("#submitLettreBtn").click(function(){
+            let text = tinyMCE.get('lettretext').getContent();
+            $('#lettretext').val(text);
+        });
+    });
+</script>

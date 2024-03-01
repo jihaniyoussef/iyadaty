@@ -1,0 +1,31 @@
+{% load widget_tweaks %}
+{% load static %}
+
+
+{% with WIDGET_ERROR_CLASS='is-invalid' %}
+<form id="certificatForm" hx-post="{% url 'add_certificat_medical' consultation.id %}" hx-target="#addCertificat">
+    {% csrf_token %}
+    {{ form.media }}
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {% for error in form.non_field_errors %}
+                <p>{{ error|escape }}</p>
+                {% endfor %}
+            </div>
+    {% endif %}
+    <div>{% render_field form.text  id="certificattext" %}</div>
+    <div class="invalid-feedback">{{ form.text.errors|first }}</div>
+    <div style="margin-top: 5px;">
+        <button id="submitBtn" class="btn btn-primary" style="text-transform: none;">Sauvegarder</button>
+    </div>
+</form>
+{% endwith %}
+
+<script>
+    $(document).ready(function(){
+        $("#submitBtn").click(function(){
+            let text = tinyMCE.get('certificattext').getContent();
+            $('#certificattext').val(text);
+        });
+    });
+</script>

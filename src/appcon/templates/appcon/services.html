@@ -1,0 +1,49 @@
+{% load widget_tweaks %}
+<!-- List des documents -->
+
+<div id="consultation-services-table">
+    {% if services %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" style="text-align: left;">Prestation</th>
+                <th class="mobile-hide" scope="col" style="text-align: left;">Assurance</th>
+                <th scope="col" style="text-align: left;">Prix</th>
+                <th scope="col" style="text-align: right;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in services %}
+            <tr>
+                <td style="padding:10px 0; text-align: left; padding-left: 30px;">
+                    {{d.service}}
+                </td>
+                <td class="mobile-hide" style="padding:10px 0; text-align: left; padding-left: 30px;">
+                    {% if d.assurance %}Avec{% else %}Sans{% endif %} assurance
+                </td>
+                <td style="padding:10px 0; text-align: left; padding-left: 30px;">
+                    {{d.prix}} Dh
+                </td>
+                <td  style="margin: 0; padding:10px 0; text-align: right;">
+                    <!-- delete  -->
+                    <span style="color: red; cursor: pointer; padding-right: 15px;"
+                    hx-get="{% url 'delete_consultation_service' d.id %}" hx-target="#dialog">
+                        <i class="fas fa-trash-alt" style="font-size: 25px;"></i>
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+            {% if total %}
+            <tr>
+                <td class="mobile-hide" colspan="3" style="padding:10px 0; text-align: left; padding-left: 30px;">
+                    Total
+                </td>
+                <td style="margin: 0; padding:10px 0; text-align: right;">
+                    <h6>{{ total }} Dh</h6>
+                </td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>

@@ -1,0 +1,220 @@
+{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Facture pour {{ consultation.patient.full_name }}</title>
+    <meta name="description" content="Invoice demo sample">
+    <style>
+        @font-face {
+            font-family: Pacifico;
+            src: url('/static/font_pdf/pacifico.ttf');
+        }
+
+        @font-face {
+            font-family: Source Sans Pro;
+            font-weight: 400;
+            src: url('/static/font_pdf/sourcesanspro-regular.otf');
+        }
+
+        @font-face {
+            font-family: Source Sans Pro;
+            font-weight: 700;
+            src: url('/static/font_pdf/sourcesanspro-bold.otf');
+        }
+
+        @page {
+            size: A4 portrait;
+            font-family: Pacifico;
+            margin: 1cm;
+            margin-bottom: 3cm;
+
+            @bottom-center {
+                color: #a9a;
+                content: '{% if doctor.gsm %}Gsm: {{ doctor.gsm }} |{% endif %} {% if doctor.tel %}Tél: {{ doctor.tel }} |{% endif %} {{ doctor.email }} \A {{ doctor.address|lower|capfirst }} - {{ doctor.ville|lower|capfirst }}';
+                font-size: 12pt;
+                white-space: pre-wrap;
+            }
+        }
+
+
+        html {
+            color: #14213d;
+            font-family: Source Sans Pro;
+            font-size: 11pt;
+            line-height: 1.6;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        h1 {
+            color: #1ee494;
+            font-family: Pacifico;
+            font-size: 40pt;
+            margin: 0;
+        }
+
+        aside {
+            display: flex;
+            margin: 2em 0 4em;
+        }
+
+        aside address {
+            font-style: normal;
+            white-space: pre-line;
+        }
+
+        aside address#from {
+            color: #a9a;
+            flex: 1;
+        }
+
+        aside address#to {
+            text-align: right;
+        }
+
+        dl {
+            position: absolute;
+            right: 0;
+            text-align: right;
+            top: 0;
+        }
+
+        dt,
+        dd {
+            display: inline;
+            margin: 0;
+        }
+
+        dt {
+            color: #a9a;
+        }
+
+        dt::before {
+            content: '';
+            display: block;
+        }
+
+        dt::after {
+            content: ':';
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th {
+            border-bottom: .2mm solid #a9a;
+            color: #a9a;
+            font-size: 10pt;
+            font-weight: 400;
+            padding-bottom: .25cm;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding-top: 7mm;
+        }
+
+        td:last-of-type {
+            color: #1ee494;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        th,
+        td {
+            text-align: center;
+        }
+
+        th:first-of-type,
+        td:first-of-type {
+            text-align: left;
+        }
+
+        th:last-of-type,
+        td:last-of-type {
+            text-align: right;
+        }
+
+        table#total {
+            background: #f6f6f6;
+            border-color: #f6f6f6;
+            border-style: solid;
+            border-width: 2cm 3cm;
+            bottom: 0;
+            font-size: 20pt;
+            margin: 0 -1cm;
+            position: absolute;
+            width: 18cm;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>Facture</h1>
+
+    <aside>
+        <address id="from" style="max-width: 8cm;">
+            {{ doctor.nom }}
+            {{ doctor.address }}
+            {{ doctor.ville }}
+            Maroc
+        </address>
+
+        <address id="to">
+            Pour {{ consultation.patient.full_name }}
+        </address>
+    </aside>
+
+    <dl id="informations">
+        <dt>Facture N°:</dt>
+        <dd>{{ consultation.id }}</dd>
+        <dt>Date</dt>
+        <dd>{{ consultation.created|date:"d/m/Y" }}</dd>
+    </dl>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Prix (MAD)</th>
+                <th>Quantité</th>
+                <th>P.T (MAD)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment in  payments %}
+            <tr>
+                <td>{{ payment.description|lower|capfirst }}</td>
+                <td>{{ payment.price }}</td>
+                <td>{{ payment.quantity }}</td>
+                <td>{{ payment.subtotal }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table id="total">
+        <thead>
+            <tr>
+                <th>Livre le</th>
+                <th>Numéro de dossier médical</th>
+                <th>Total (MAD)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ consultation.created|date:"d/m/Y" }}</td>
+                <td>{{ consultation.patient.id }}</td>
+                <td>{{ total }}</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

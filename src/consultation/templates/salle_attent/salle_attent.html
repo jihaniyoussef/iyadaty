@@ -1,0 +1,18 @@
+{% for p in  salle_attent %}
+<tr style="cursor: pointer;">
+    <th style="text-align:left; font-size: 1.2em;" onclick="window.location='{{ p.patient.get_absolute_url }}';">{{ forloop.counter }}</th>
+    <td class="mobile-hide" style="text-align:center" onclick="window.location='{{ p.patient.get_absolute_url }}';">{{p.created|date:"H:i"}}</td>
+    <td style="text-align:center" onclick="window.location='{{ p.patient.get_absolute_url }}';">{{p.patient.full_name}}</td>
+    <td style="text-align:center" onclick="window.location='{{ p.patient.get_absolute_url }}';">
+        <button style="font-size: 1.2em;"
+        class="btn {% if p.motif == 'NC' %}btn-success{% elif p.motif == 'AC' %}btn-secondary{% else %}btn-warning{% endif %} btn-floating" name="button">
+            {{p.motif}}
+        </button>
+    </td>
+    <td style="text-align:right">
+        <a class="btn btn-danger btn-floating" role="button" hx-get="{% url 'delete_attent' p.id %}" hx-target="#dialog">
+            <i class="fas fa-trash-alt" style="font-size:20px"></i>
+        </a>
+    </td>
+</tr>
+{% endfor %}

@@ -1,0 +1,10 @@
+{{ certificat.text|safe }}
+<div>
+    <button type="button" class="btn btn-primary"
+    hx-get="{% url 'edit_certificat_medical' consultation.id %}" hx-target="#addCertificat">
+        <span style="text-transform: none;">Modifier</span>
+    </button>
+    <a data-bs-dismiss="modal" class="btn btn-success">
+        <span style="text-transform: none;">Sauvgarder</span>
+    </a>
+</div>
